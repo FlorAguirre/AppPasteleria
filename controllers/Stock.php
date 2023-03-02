@@ -13,9 +13,7 @@
             for($i=0;$i < count($arrStock); $i++){
                 $id_mp = $arrStock[$i]->id_mp;
                 $options = ' <a href="'.BASE_URL.'views/stock/editar-stock.php?p='.$id_mp.'" class="btn btn-outline-primary btn-sm" title="Editar Registro"><i
-                class="fa-solid fa-user-pen"></i></a>
-                <button class="btn btn-outline-danger btn-sm" title="Eliminar Registro" onclick="fntDelStock('.$id_mp.')" ><i
-                class="fa-solid fa-trash-can"></i></button>';
+                class="fa-solid fa-user-pen"></i></a>';
                 $arrStock[$i]->options = $options;
             }
             $arrResponse['status'] = true;
@@ -49,15 +47,15 @@
         die();
     }
  
-/*
-    if($option == "verregistro"){
+
+    if($option == "verstock"){
       if($_POST){
-            $id_cliente = intval($_POST['id_cliente']);
-            $arrPersona = $objPersona->gerPersonas($id_cliente);
-            if(empty($arrPersona)){
+            $id_mp = intval($_POST['id_mp']);
+            $arrStock = $objStock->gerStock($id_mp);
+            if(empty($arrStock)){
                 $arrResponse = array('status' => false, 'msg' => 'Datos no encontrados');
             }else{
-                $arrResponse = array('status' => true, 'msg' => 'Datos encontrados', 'data' => $arrPersona);
+                $arrResponse = array('status' => true, 'msg' => 'Datos encontrados', 'data' => $arrStock);
             }
             echo json_encode($arrResponse);
       }
@@ -66,24 +64,19 @@
 
     if($option == "actualizar"){
         if($_POST){
-            if(empty($_POST['txtId']) || empty($_POST['txtNombre']) || empty($_POST['txtApellido']) || empty($_POST['txtEmail']) || empty($_POST['txtDNI']) || empty($_POST['txtTelefono']) || empty($_POST['txtCalle']) || empty($_POST['txtCiudad']) || empty($_POST['txtCP'])){
+            if(empty($_POST['txtId']) || empty($_POST['txtNombreStock']) || empty($_POST['txtCantidad']) || empty($_POST['txtMedida'])){
                 $arrResponse = array('status' => false, 'msg' => 'Error de datos');
             }else{
                 $intId = intval($_POST['txtId']);
-                $strNombre = ucwords(trim($_POST['txtNombre']));
-                $strApellido = ucwords(trim($_POST['txtApellido']));
-                $strEmail = strtolower(trim($_POST['txtEmail']));
-                $strDNI = ucwords(trim($_POST['txtDNI']));
-                $intTelefono = trim($_POST['txtTelefono']);
-                $strCalle = ucwords(trim($_POST['txtCalle']));
-                $strCiudad = ucwords(trim($_POST['txtCiudad']));
-                $strCP = ucwords(trim($_POST['txtCP']));
+                $strNombreStock = ucwords(trim($_POST['txtNombreStock']));
+                $intCantidad = trim($_POST['txtCantidad']);
+                $strMedida = ucwords(trim($_POST['txtMedida']));
     
-                $arrPersona = $objPersona->updatePersona($intId, $strNombre,$strApellido,$strEmail,$strDNI,$intTelefono,$strCalle,$strCiudad,$strCP);
-                if($arrPersona->idp > 0){
+                $arrStock = $objStock->updateStock($intId, $strNombreStock,$intCantidad,$strMedida);
+                if($arrStock->idp > 0){
                     $arrResponse = array('status' => true, 'msg' => 'Datos actualizados correctamente');
                 }else{
-                    $arrResponse = array('status' => false, 'msg' => 'Error al actualizar o email ya existe');
+                    $arrResponse = array('status' => false, 'msg' => 'Error al actualizar o la materia prima ya existe');
                 }
                 }
                 echo json_encode($arrResponse);
@@ -93,13 +86,14 @@
             die();
     }
 
+    
     if($option == "eliminar"){
        if($_POST){
-            if(empty($_POST['id_cliente'])){
+            if(empty($_POST['id_mp'])){
                 $arrResponse = array('status' => false, 'msg' => 'Error de datos');
             }else{
-                $idCliente = intval($_POST['id_cliente']);
-                $arrInfo = $objPersona-> delPersona($idCliente);
+                $idStock = intval($_POST['id_mp']);
+                $arrInfo = $objStock-> delStock($idStock);
                 if($arrInfo->id){
                     $arrResponse = array('status' => true, 'msg' => 'Registro Eliminado');
                 }else{
@@ -111,6 +105,7 @@
        
     }
 
+    
     if($option == "buscar"){
         if($_POST){
             if(empty($_POST['txtBuscar'])){
@@ -119,7 +114,7 @@
                 $strBuscar = trim($_POST['txtBuscar']);
                 $arrResponse = array('status' => false, 'found'=>0, 'data'=> "");
            
-                $arrInfo = $objPersona-> getPersonasBusqueda($strBuscar);
+                $arrInfo = $objStock-> getStockBusqueda($strBuscar);
                 if(!empty($arrInfo)){
                     $arrResponse = array('status' => true, 'found'=>count($arrInfo), 'data'=> $arrInfo);
                 }
@@ -130,5 +125,5 @@
     }
  
     die();
-*/
+
 ?>

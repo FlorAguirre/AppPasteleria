@@ -6,7 +6,7 @@
     <h1 class="text-center">Stock de Productos</h1>
     <br>
     <br>
-    <a href="<?= BASE_URL ?>views/stock/crear-stock.php" class="btn btn-success"><i class="fa-solid fa-circle-plus"></i>  Registrar Producto</a>
+    <a href="<?= BASE_URL ?>views/stock/crear-stock.php" class="btn btn-success"><i class="fa-solid fa-circle-plus"></i>  Registrar Stock</a>
     <br>
     <br>
     <br>

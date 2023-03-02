@@ -27,31 +27,30 @@
 
             }
 
-            public function gerPersonas(int $id_cliente){
-                $sql = $this->conexion->query("call sp_selectCliente('{$id_cliente}')");
+            public function gerStock(int $id_mp){
+                $sql = $this->conexion->query("call sp_selectStock('{$id_mp}')");
                 $sql = $sql->fetch_object();
                 return $sql;
             }
                 
             
-            public function updatePersona(int $id_cliente,string $nombre, string $apellido, string $email, string $dni, int $telefono, string $calle, string $ciudad, string $cp ){
-                $sql = $this->conexion->query("call sp_actualizarRegistro('{$id_cliente}','{$nombre}','{$apellido}','{$email}','{$dni}','{$telefono}','{$calle}','{$ciudad}', '{$cp}')");
+            public function updateStock(int $id_mp,string $nombre,int $cantidad, string $medida){
+                $sql = $this->conexion->query("call sp_actualizarStock('{$id_mp}','{$nombre}','{$cantidad}','{$medida}')");
                 $sql = $sql->fetch_object();
                 return $sql;
             }
 
 
-            public function delPersona(int $id_cliente ){
-                $sql = $this->conexion->query("call sp_eliminarRegistro('{$id_cliente}')");
+            public function delStock(int $id_mp ){
+                $sql = $this->conexion->query("call sp_eliminarStock('{$id_mp}')");
                 $sql = $sql->fetch_object();
                 return $sql;
         }
 
 
-            
-            public function getPersonasBusqueda(string $busqueda){
+            public function getStockBusqueda(string $busqueda){
                 $arrRegistros = array();
-                $sql = $this->conexion->query("call sp_buscarRegistro('{$busqueda}')");
+                $sql = $this->conexion->query("call sp_buscarStock('{$busqueda}')");
            
                 while ($obj = $sql->fetch_object()){
                     array_push($arrRegistros, $obj);

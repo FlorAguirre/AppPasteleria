@@ -13,8 +13,8 @@
     <form id="frmEditarStock">
         <input type="hidden" id="txtId" name="txtId" required>
         <div class="mb-3">
-            <label for="txtNombreProducto" class="form-label">Nombre del producto</label>
-            <input type="text" class="form-control" id="txtNombreProducto" name="txtNombreProducto" placeholder="Nombre del producto" required >
+            <label for="txtNombreStock" class="form-label">Nombre de la materia prima</label>
+            <input type="text" class="form-control" id="txtNombreStock" name="txtNombreStock" placeholder="Nombre del producto" required >
         </div>
         <div class="mb-3">
             <label for="txtCantidad" class="form-label">Cantidad</label>
@@ -38,5 +38,5 @@
 <script src="../template/js/functions-stock.js"></script>
 <script>
     let id = "<?= $_GET['p']?>";
-    fntMostrar(id);
+    fntMostrarStock(id);
 </script>

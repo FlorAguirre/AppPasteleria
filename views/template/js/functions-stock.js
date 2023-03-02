@@ -69,12 +69,12 @@ if(document.querySelector("#frmRestroStock")){
     }
 }
 
-/*
-async function fntMostrar(id){
+
+async function fntMostrarStock(id){
     const frmData = new FormData();
-    frmData.append('id_cliente',id);
+    frmData.append('id_mp',id);
     try{
-        let resp = await fetch(base_url+"controllers/Persona.php?op=verregistro",{
+        let resp = await fetch(base_url+"controllers/Stock.php?op=verstock",{
             method:'POST',
             mode:'cors',
             cache:'no-cache',
@@ -82,17 +82,12 @@ async function fntMostrar(id){
         });
         json = await resp.json();
         if(json.status){
-            document.querySelector('#txtId').value = json.data.id_cliente;
-            document.querySelector('#txtNombre').value = json.data.nombre;
-            document.querySelector('#txtApellido').value = json.data.apellido;
-            document.querySelector('#txtEmail').value = json.data.email;
-            document.querySelector('#txtDNI').value = json.data.dni;
-            document.querySelector('#txtTelefono').value = json.data.telefono;
-            document.querySelector('#txtCalle').value = json.data.calle;
-            document.querySelector('#txtCiudad').value = json.data.ciudad;
-            document.querySelector('#txtCP').value = json.data.cp;
+            document.querySelector('#txtId').value = json.data.id_mp;
+            document.querySelector('#txtNombreStock').value = json.data.nombre;
+            document.querySelector('#txtCantidad').value = json.data.cantidad_mp;
+            document.querySelector('#txtMedida').value = json.data.medida;
         }else{
-            window.location = base_url+'views/persona/index.php';
+            window.location = base_url+'views/stock/stock.php';
         }
 
     }catch(err){
@@ -100,30 +95,27 @@ async function fntMostrar(id){
     }
 }
 
-if(document.querySelector("#frmEditar")){
-    let frmEditar = document.querySelector("#frmEditar");
-    frmEditar.onsubmit = function(e){
+
+if(document.querySelector("#frmEditarStock")){
+    let frmEditarStock = document.querySelector("#frmEditarStock");
+    frmEditarStock.onsubmit = function(e){
         e.preventDefault();
-        fntEditar();
+        fntEditarStock();
     }
 
-    async function fntEditar(){
+    async function fntEditarStock(){
         let intId = document.querySelector("#txtId").value;
-        let strNombre = document.querySelector("#txtNombre").value;
-        let strApellido = document.querySelector("#txtApellido").value;
-        let strEmail = document.querySelector("#txtEmail").value;
-        let strDNI = document.querySelector("#txtDNI").value;
-        let intTelefono = document.querySelector("#txtTelefono").value;
-        let strCalle = document.querySelector("#txtCalle").value;
-        let strCiudad = document.querySelector("#txtCiudad").value;
-        let strCP = document.querySelector("#txtCP").value;
-        if(intId == "" || strNombre == "" || strApellido == "" || strEmail == "" || strDNI == "" || intTelefono == "" || strCalle == "" || strCiudad == "" || strCP == ""){
+        let strNombreStock = document.querySelector("#txtNombreStock").value;
+        let intCantidad = document.querySelector("#txtCantidad").value;
+        let strMedida = document.querySelector("#txtMedida").value;
+
+        if(intId == "" || strNombreStock == ""|| intCantidad == "" || strMedida == ""){
             alert("Todos los campos deben ser completados");
             return;
         }
         try{
-            const data = new FormData(frmEditar);
-            let resp = await fetch(base_url+"controllers/Persona.php?op=actualizar",{
+            const data = new FormData(frmEditarStock);
+            let resp = await fetch(base_url+"controllers/Stock.php?op=actualizar",{
                 method:'POST',
                 mode:'cors',
                 cache:'no-cache',
@@ -145,9 +137,10 @@ if(document.querySelector("#frmEditar")){
     }
 }
 
-function fntDelPersona(id){
+
+function fntDelStock(id){
     swal({
-    title: "¿Realmente quieres eliminar este cliente?",
+    title: "¿Realmente quieres eliminar esta materia prima?",
     text: "",
     icon: "warning",
     buttons: true,
@@ -155,19 +148,19 @@ function fntDelPersona(id){
   })
   .then((willDelete) => {
     if (willDelete) {
-        fntDelete(id);
+        fntDeleteStock(id);
     } else {
       swal("Se ha cancelado la acción");
     }
   });
 }
 
-async function fntDelete(id){
+async function fntDeleteStock(id){
 
     try{
         let formData = new FormData();
-        formData.append('id_cliente', id);
-        let resp = await fetch(base_url+"controllers/Persona.php?op=eliminar",{
+        formData.append('id_mp', id);
+        let resp = await fetch(base_url+"controllers/Stock.php?op=eliminar",{
             method:'POST',
             mode:'cors',
             cache:'no-cache',
@@ -189,6 +182,7 @@ async function fntDelete(id){
     }
 }
 
+
 if(document.querySelector("#frmSearch")){
         let frmSearch = document.querySelector("#frmSearch");
         frmSearch.onsubmit = function(e){
@@ -198,18 +192,18 @@ if(document.querySelector("#frmSearch")){
             if(busqueda == ""){
                     getPersona();
             }else{
-                fntBuscarRegistros();
+                fntBuscarStock();
             }
         }
             let inputSearch = document.querySelector("#txtBuscar");
             inputSearch.addEventListener("keyup",fntInputSearch, true);
 
-        async function fntBuscarRegistros(){
-            document.querySelector("#tblBodyPersonas").innerHTML = "";
+        async function fntBuscarStock(){
+            document.querySelector("#tblBodyStock").innerHTML = "";
             try{
                 let formData = new FormData(frmSearch);
                 
-                let resp = await fetch(base_url+"controllers/Persona.php?op=buscar",{
+                let resp = await fetch(base_url+"controllers/Stock.php?op=buscar",{
                     method:'POST',
                     mode:'cors',
                     cache:'no-cache',
@@ -222,24 +216,17 @@ if(document.querySelector("#frmSearch")){
                     let data = json.data;
                     data.forEach((item)=>{
                         let newtr = document.createElement("tr");
-                        newtr.id = "row_" +item.id_cliente;
+                        newtr.id = "row_" +item.id_mp;
                         newtr.innerHTML = `<tr>
-                                            <th scope="row">${item.id_cliente}</th>
+                                            <th scope="row">${item.id_mp}</th>
                                             <td>${item.nombre}</td>
-                                            <td>${item.apellido}</td>
-                                            <td>${item.email}</td>
-                                            <td>${item.dni}</td>
-                                            <td>${item.telefono}</td>
-                                            <td>${item.calle}</td>
-                                            <td>${item.ciudad}</td>
-                                            <td>${item.cp}</td>
+                                            <td>${item.cantidad_mp}</td>
+                                            <td>${item.medida}</td>
                                             <td>
-                                            ' <a href="${base_url}views/persona/editar-persona.php?p=${item.id_cliente}" class="btn btn-outline-primary btn-sm" title="Editar Registro"><i
+                                            ' <a href="${base_url}views/stock/editar-stock.php?p=${item.id_mp}" class="btn btn-outline-primary btn-sm" title="Editar Registro"><i
                                             class="fa-solid fa-user-pen"></i></a>
-                                            <button class="btn btn-outline-danger btn-sm" title="Eliminar Registro" onclick="fntDelPersona(${item.id_cliente})" ><i
-                                            class="fa-solid fa-trash-can"></i></button>'
-                                            </td>`;
-                        document.querySelector("#tblBodyPersonas").appendChild(newtr);
+                                            `;
+                        document.querySelector("#tblBodyStock").appendChild(newtr);
                     });
                 }
                     
@@ -252,11 +239,10 @@ if(document.querySelector("#frmSearch")){
 function fntInputSearch(){
     let inputBusqueda = document.querySelector("#txtBuscar").value;
         if(inputBusqueda == ""){
-            getPersona();
+            getStock();
         }else{
-            fntBuscarRegistros();
+            fntBuscarStock();
         }
 }
 }
 
-*/
