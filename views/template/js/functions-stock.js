@@ -1,26 +1,21 @@
 
-async function getPersona(){
-    document.querySelector("#tblBodyPersonas").innerHTML = "";
+async function getStock(){
+    document.querySelector("#tblBodyStock").innerHTML = "";
     try{
-        let resp = await fetch(base_url+"controllers/Persona.php?op=listregistros");
+        let resp = await fetch(base_url+"controllers/Stock.php?op=liststock");
         json = await resp.json();
         if(json.status){
             let data = json.data;
             data.forEach((item)=>{
                 let newtr = document.createElement("tr");
-                newtr.id = "row_" +item.id_cliente;
+                newtr.id = "row_" +item.id_mp;
                 newtr.innerHTML = `<tr>
-                                    <th scope="row">${item.id_cliente}</th>
+                                    <th scope="row">${item.id_mp}</th>
                                     <td>${item.nombre}</td>
-                                    <td>${item.apellido}</td>
-                                    <td>${item.email}</td>
-                                    <td>${item.dni}</td>
-                                    <td>${item.telefono}</td>
-                                    <td>${item.calle}</td>
-                                    <td>${item.ciudad}</td>
-                                    <td>${item.cp}</td>
+                                    <td>${item.cantidad_mp}</td>
+                                    <td>${item.medida}</td>
                                     <td>${item.options}</td>`;
-                document.querySelector("#tblBodyPersonas").appendChild(newtr);
+                document.querySelector("#tblBodyStock").appendChild(newtr);
             });
             
         }
@@ -30,33 +25,29 @@ async function getPersona(){
     }
 }
 
-if(document.querySelector("#tblBodyPersonas")){
-    getPersona();
+if(document.querySelector("#tblBodyStock")){
+    getStock();
 }
 
-if(document.querySelector("#frmRestro")){
-    let frmRegistro = document.querySelector("#frmRestro");
-    frmRegistro.onsubmit = function(e){
+
+if(document.querySelector("#frmRestroStock")){
+    let frmRegistroStock = document.querySelector("#frmRestroStock");
+    frmRegistroStock.onsubmit = function(e){
         e.preventDefault();
-        fntGuardar();
+        fntGuardarStock();
     }
 
-    async function fntGuardar(){
-        let strNombre = document.querySelector("#txtNombre").value;
-        let strApellido = document.querySelector("#txtApellido").value;
-        let strEmail = document.querySelector("#txtEmail").value;
-        let strDNI = document.querySelector("#txtDNI").value;
-        let intTelefono = document.querySelector("#txtTelefono").value;
-        let strCalle = document.querySelector("#txtCalle").value;
-        let strCiudad = document.querySelector("#txtCiudad").value;
-        let strCP = document.querySelector("#txtCP").value;
-        if(strNombre == "" || strApellido == "" || strEmail == "" || strDNI == "" || intTelefono == "" || strCalle == "" || strCiudad == "" || strCP == ""){
+    async function fntGuardarStock(){
+        let strNombreStock = document.querySelector("#txtNombreStock").value;
+        let intCantidad = document.querySelector("#txtCantidad").value;
+        let strMedida = document.querySelector("#txtMedida").value;
+        if(strNombreStock == "" || intCantidad == "" || strMedida == ""){
             alert("Todos los campos deben ser completados");
             return;
         }
         try{
-            const data = new FormData(frmRegistro);
-            let resp = await fetch(base_url+"controllers/Persona.php?op=registro",{
+            const data = new FormData(frmRegistroStock);
+            let resp = await fetch(base_url+"controllers/Stock.php?op=registroStock",{
                 method:'POST',
                 mode:'cors',
                 cache:'no-cache',
@@ -66,7 +57,7 @@ if(document.querySelector("#frmRestro")){
             json = await resp.json();
             if(json.status){
                 swal('Guardar', json.msg, "success");
-                frmRegistro.reset();
+                frmRegistroProducto.reset();
             }else{
                 swal('Guardar', json.msg, "error");
             }
@@ -78,6 +69,7 @@ if(document.querySelector("#frmRestro")){
     }
 }
 
+/*
 async function fntMostrar(id){
     const frmData = new FormData();
     frmData.append('id_cliente',id);
@@ -267,3 +259,4 @@ function fntInputSearch(){
 }
 }
 
+*/

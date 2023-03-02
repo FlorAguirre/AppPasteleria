@@ -6,11 +6,12 @@
     <h1 class="text-center">Editar Cliente</h1>
     <br>
     <br>
-    <a href="<?= BASE_URL ?>views/persona">Lista Clientes</a>
+    <a href="<?= BASE_URL ?>views/persona/index.php">Lista Clientes</a>
     <br>
     <br>
     <br>
-    <form id="frmRestro">
+    <form id="frmEditar">
+        <input type="hidden" id="txtId" name="txtId" required>
         <div class="mb-3">
             <label for="txtNombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="txtNombre" name="txtNombre" placeholder="Nombres" required >
@@ -52,3 +53,10 @@
 <?php
     require "../template/footer.php";
 ?>
+
+
+<script src="../template/js/functions-persona.js"></script>
+<script>
+    let id = "<?= $_GET['p']?>";
+    fntMostrar(id);
+</script>

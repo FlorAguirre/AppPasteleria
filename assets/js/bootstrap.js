@@ -1883,7 +1883,7 @@
         referenceElement = this._config.reference;
       }
       const popperConfig = this._getPopperConfig();
-      this._popper = Popper__namespace.createPopper(referenceElement, this._menu, popperConfig);
+      this._popper = Popper__namespace._createPopper(referenceElement, this._menu, popperConfig);
     }
     _isShown() {
       return this._menu.classList.contains(CLASS_NAME_SHOW$6);
@@ -3452,7 +3452,7 @@
     _createPopper(tip) {
       const placement = execute(this._config.placement, [this, tip, this._element]);
       const attachment = AttachmentMap[placement.toUpperCase()];
-      return Popper__namespace.createPopper(this._element, tip, this._getPopperConfig(attachment));
+      return Popper__namespace._createPopper(this._element, tip, this._getPopperConfig(attachment));
     }
     _getOffset() {
       const {

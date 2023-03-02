@@ -6,7 +6,7 @@
     <h1 class="text-center">Registrar Cliente</h1>
     <br>
     <br>
-    <a href="<?= BASE_URL ?>views/persona">Lista Clientes</a>
+    <a href="<?= BASE_URL ?>views/persona/index.php">Lista Clientes</a>
     <br>
     <br>
     <br>
@@ -53,3 +53,5 @@
 <?php
     require "../template/footer.php";
 ?>
+
+<script src="../template/js/functions-persona.js"></script>

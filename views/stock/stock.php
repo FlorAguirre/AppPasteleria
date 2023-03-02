@@ -3,29 +3,24 @@
 ?>
 
 <main class="container">
-    <h1 class="text-center">Lista de Clientes</h1>
+    <h1 class="text-center">Stock de Productos</h1>
     <br>
     <br>
-    <a href="<?= BASE_URL ?>views/persona/crear-persona.php" class="btn btn-success"><i class="fa-solid fa-circle-plus"></i>  Registrar Cliente</a>
+    <a href="<?= BASE_URL ?>views/stock/crear-stock.php" class="btn btn-success"><i class="fa-solid fa-circle-plus"></i>  Registrar Producto</a>
     <br>
     <br>
     <br>
-    <table id="tblPersonas" class="table table-striped">
+    <table id="tblStock" class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apellido</th>
-                <th scope="col">Email</th>
-                <th scope="col">DNI</th>
-                <th scope="col">Telefono</th>
-                <th scope="col">Calle</th>
-                <th scope="col">Ciudad</th>
-                <th scope="col">Código Postal</th>
+                <th scope="col">Nombre del producto</th>
+                <th scope="col">Cantidad</th>
+                <th scope="col">Medida</th>
                 <th scope="col">Opciones</th>
             </tr>
         </thead>
-        <tbody id="tblBodyPersonas">
+        <tbody id="tblBodyStock">
             <!--
             <tr>
                 <th scope="row">1</th>
@@ -52,4 +47,4 @@
     require "../template/footer.php";
 ?>
 
-<script src="../template/js/functions-persona.js"></script>
+<script src="../template/js/functions-stock.js"></script>

@@ -1,49 +1,45 @@
 <?php
     
-    require_once "../models/PersonaModel.php";
+    require_once "../models/StockModel.php";
 
     $option = $_REQUEST['op'];
-    $objPersona = new PersonaModel();
+    $objStock = new StockModel();
 
-    if($option == "listregistros"){
+    if($option == "liststock"){
         $arrResponse = array('status' => false, 'data' => "");
-        $arrPersona = $objPersona->getPersonas();
+        $arrStock = $objStock->getStock();
 
-        if(!empty($arrPersona)){
-            for($i=0;$i < count($arrPersona); $i++){
-                $id_cliente = $arrPersona[$i]->id_cliente;
-                $options = ' <a href="'.BASE_URL.'views/persona/editar-persona.php?p='.$id_cliente.'" class="btn btn-outline-primary btn-sm" title="Editar Registro"><i
+        if(!empty($arrStock)){
+            for($i=0;$i < count($arrStock); $i++){
+                $id_mp = $arrStock[$i]->id_mp;
+                $options = ' <a href="'.BASE_URL.'views/stock/editar-stock.php?p='.$id_mp.'" class="btn btn-outline-primary btn-sm" title="Editar Registro"><i
                 class="fa-solid fa-user-pen"></i></a>
-                <button class="btn btn-outline-danger btn-sm" title="Eliminar Registro" onclick="fntDelPersona('.$id_cliente.')" ><i
+                <button class="btn btn-outline-danger btn-sm" title="Eliminar Registro" onclick="fntDelStock('.$id_mp.')" ><i
                 class="fa-solid fa-trash-can"></i></button>';
-                $arrPersona[$i]->options = $options;
+                $arrStock[$i]->options = $options;
             }
             $arrResponse['status'] = true;
-            $arrResponse['data'] = $arrPersona;
+            $arrResponse['data'] = $arrStock;
         }
         echo json_encode($arrResponse);
         die();
     }
 
-    if($option == "registro"){
+    if($option == "registroStock"){
         if($_POST){
-        if(empty($_POST['txtNombre']) || empty($_POST['txtApellido']) || empty($_POST['txtEmail']) || empty($_POST['txtDNI']) || empty($_POST['txtTelefono']) || empty($_POST['txtCalle']) || empty($_POST['txtCiudad']) || empty($_POST['txtCP'])){
+        if(empty($_POST['txtNombreStock']) || empty($_POST['txtCantidad']) || empty($_POST['txtMedida'])){
             $arrResponse = array('status' => false, 'msg' => 'Error de datos');
         }else{
-            $strNombre = ucwords(trim($_POST['txtNombre']));
-            $strApellido = ucwords(trim($_POST['txtApellido']));
-            $strEmail = strtolower(trim($_POST['txtEmail']));
-            $strDNI = ucwords(trim($_POST['txtDNI']));
-            $intTelefono = trim($_POST['txtTelefono']);
-            $strCalle = ucwords(trim($_POST['txtCalle']));
-            $strCiudad = ucwords(trim($_POST['txtCiudad']));
-            $strCP = ucwords(trim($_POST['txtCP']));
+            $strNombreStock = ucwords(trim($_POST['txtNombreStock']));
+            $intCantidad = trim($_POST['txtCantidad']);
+            $strMedida= ucwords(trim($_POST['txtMedida']));
+       
 
-            $arrPersona = $objPersona->insertPersona($strNombre,$strApellido,$strEmail,$strDNI,$intTelefono,$strCalle,$strCiudad,$strCP);
-            if($arrPersona->id > 0){
+            $arrStock = $objStock->insertStock($strNombreStock, $intCantidad, $strMedida);
+            if($arrStock->id > 0){
                 $arrResponse = array('status' => true, 'msg' => 'Datos guardados correctamente');
             }else{
-                $arrResponse = array('status' => false, 'msg' => 'Error al guardar o email ya existe');
+                $arrResponse = array('status' => false, 'msg' => 'Error al guardar o materia prima ya existe');
             }
             }
             echo json_encode($arrResponse);
@@ -53,6 +49,7 @@
         die();
     }
  
+/*
     if($option == "verregistro"){
       if($_POST){
             $id_cliente = intval($_POST['id_cliente']);
@@ -133,5 +130,5 @@
     }
  
     die();
-
+*/
 ?>
